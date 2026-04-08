@@ -146,4 +146,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para de
 
 Brain Tutor Team - contato@braintutor.com
 
-Link do Projeto: [https://github.com/seu-usuario/brain-tutor](https://github.com/seu-usuario/brain-tutor)
+Link do Projeto: [[https://github.com/seu-usuario/brain-tutor](https://github.com/nataliavsqs/LabEngSoft-N-2026-1-G13-BrainTutor/]([https://github.com/seu-usuario/brain-tutor](https://github.com/seu-usuario/brain-tutor](https://github.com/nataliavsqs/LabEngSoft-N-2026-1-G13-BrainTutor/)
