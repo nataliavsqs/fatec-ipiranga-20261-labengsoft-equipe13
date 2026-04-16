@@ -1,0 +1,100 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-01-15T14:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_users_change_password",
+      "parentId": "fld_users",
+      "modified": 1705324800000,
+      "created": 1705324800000,
+      "url": "{{ _.base_url }}/api/users/change-password",
+      "name": "Change Password",
+      "description": "Alterar senha do usuário logado",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"currentPassword\": \"123456\",\n  \"newPassword\": \"novaSenha123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1705319700000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_specialties_list",
+      "parentId": "fld_specialties",
+      "modified": 1705324800000,
+      "created": 1705324800000,
+      "url": "{{ _.base_url }}/api/specialties/list",
+      "name": "List Specialties",
+      "description": "Listar todas as especialidades disponíveis",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705320000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_specialties_teacher",
+      "parentId": "fld_specialties",
+      "modified": 1705324800000,
+      "created": 1705324800000,
+      "url": "{{ _.base_url }}/api/specialties/teacher/1",
+      "name": "Get Teacher Specialties",
+      "description": "Obter especialidades de um professor específico",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705319900000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_specialties",
+      "parentId": "wrk_main",
+      "modified": 1705324800000,
+      "created": 1705324800000,
+      "name": "Specialties",
+      "description": "Endpoints relacionados às especialidades",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1705317000000,
+      "_type": "request_group"
+    }
+  ]
+}

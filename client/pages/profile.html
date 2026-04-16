@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Brain Tutor</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Brain Tutor</span>
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="btn btn-outline btn-sm" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                    
+                    <div class="user-info">
+                        <img src="../assets/images/default-avatar.svg" alt="Avatar" class="user-avatar-small" id="headerAvatar">
+                        <span id="headerUserName">Usuário</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <div class="profile-container">
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1><i class="fas fa-user-edit"></i> Editar Perfil</h1>
+                <p>Mantenha suas informações sempre atualizadas</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-profile" id="loadingProfile">
+                <div class="spinner"></div>
+                <p>Carregando perfil...</p>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content hidden" id="profileContent">
+                
+                <!-- Section 1: Personal Information -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user"></i> Informações Básicas</h2>
+                        <p>Dados pessoais e de contato</p>
+                    </div>
+
+                    <form id="personalInfoForm" class="profile-form">
+                        <!-- Profile Photo -->
+                        <div class="form-group photo-upload">
+                            <label>Foto de Perfil</label>
+                            <div class="photo-container">
+                                <img src="../assets/images/default-avatar.svg" 
+                                     alt="Foto de perfil" 
+                                     class="profile-photo" 
+                                     id="profilePhoto">
+                                <div class="photo-overlay">
+                                    <button type="button" class="btn-change-photo" onclick="triggerPhotoUpload()">
+                                        <i class="fas fa-camera"></i>
+                                        <span>Alterar imagem</span>
+                                    </button>
+                                </div>
+                                <input type="file" 
+                                       id="photoInput" 
+                                       accept="image/*" 
+                                       style="display: none;"
+                                       onchange="handlePhotoUpload(event)">
+                            </div>
+                            <small class="form-hint">Formatos aceitos: JPG, PNG, WEBP. Até 8MB (otimizada automaticamente para envio de até 2MB)</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Nome Completo <span class="required">*</span></label>
+                                <input type="text" 
+                                       id="fullName" 
+                                       name="fullName" 
+                                       placeholder="Ex: João Silva Santos"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="displayName">Nome de Exibição <span class="required">*</span></label>
+                                <input type="text" 
+                                       id="displayName" 
+                                       name="displayName" 
+                                       placeholder="Ex: João Silva"
+                                       required>
+                                <small class="form-hint">Nome que será exibido publicamente</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">E-mail <i class="fas fa-lock"></i></label>
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       disabled
+                                       title="O email não pode ser alterado">
+                                <small class="form-hint">Não é possível alterar o email</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="tel" 
+                                       id="phone" 
+                                       name="phone" 
+                                       placeholder="(11) 99999-9999"
+                                       maxlength="15">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthDate">Data de Nascimento</label>
+                            <input type="date" 
+                                   id="birthDate" 
+                                   name="birthDate">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Salvar Alterações Pessoais
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Section 2: Professional Profile (Only for Teachers) -->
+                <section class="profile-section" id="professionalSection" style="display: none;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-briefcase"></i> Perfil Profissional</h2>
+                        <p>Informações acadêmicas e profissionais</p>
+                    </div>
+
+                    <form id="professionalInfoForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="professionalTitle">Título Profissional <span class="required">*</span></label>
+                            <input type="text" 
+                                   id="professionalTitle" 
+                                   name="professionalTitle" 
+                                   placeholder="Ex: Professor de Matemática e Física"
+                                   required>
+                            <small class="form-hint">Como você gostaria de ser apresentado</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Matéria Principal <span class="required">*</span></label>
+                            <input type="text" 
+                                   id="subject" 
+                                   name="subject" 
+                                   placeholder="Ex: Matemática"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio">Descrição / Sobre Você</label>
+                            <textarea id="bio" 
+                                      name="bio" 
+                                      rows="5"
+                                      placeholder="Conte sobre sua experiência, metodologia de ensino, conquistas..."
+                                      maxlength="1000"></textarea>
+                            <small class="form-hint char-counter">
+                                <span id="bioCharCount">0</span>/1000 caracteres
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Especialidades</label>
+                            <div class="specialties-grid" id="specialtiesGrid">
+                                <!-- Specialties will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="education">Formação Acadêmica</label>
+                                <input type="text" 
+                                       id="education" 
+                                       name="education" 
+                                       placeholder="Ex: Licenciatura em Matemática - USP">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="experienceYears">Anos de Experiência</label>
+                                <input type="number" 
+                                       id="experienceYears" 
+                                       name="experienceYears" 
+                                       min="0" 
+                                       max="50"
+                                       placeholder="Ex: 5">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="hourlyRate">Valor por Hora (R$) <span class="required">*</span></label>
+                                <input type="number" 
+                                       id="hourlyRate" 
+                                       name="hourlyRate" 
+                                       min="1" 
+                                       step="0.01"
+                                       placeholder="Ex: 75.00"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Localização</label>
+                                <input type="text" 
+                                       id="location" 
+                                       name="location" 
+                                       placeholder="Ex: São Paulo, SP">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="availability">Disponibilidade de Horários</label>
+                            <textarea id="availability" 
+                                      name="availability" 
+                                      rows="3"
+                                      placeholder="Ex: Segunda a sexta, 8h às 18h"></textarea>
+                            <small class="form-hint">Descreva seus horários disponíveis para aulas</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Links Externos</label>
+                            <div class="external-links">
+                                <div class="link-input">
+                                    <i class="fab fa-linkedin"></i>
+                                    <input type="url" 
+                                           id="linkedinUrl" 
+                                           name="linkedinUrl" 
+                                           placeholder="URL do LinkedIn">
+                                </div>
+                                
+                                <div class="link-input">
+                                    <i class="fab fa-github"></i>
+                                    <input type="url" 
+                                           id="githubUrl" 
+                                           name="githubUrl" 
+                                           placeholder="URL do GitHub">
+                                </div>
+                                
+                                <div class="link-input">
+                                    <i class="fas fa-briefcase"></i>
+                                    <input type="url" 
+                                           id="portfolioUrl" 
+                                           name="portfolioUrl" 
+                                           placeholder="URL do Portfólio">
+                                </div>
+                                
+                                <div class="link-input">
+                                    <i class="fas fa-link"></i>
+                                    <input type="url" 
+                                           id="otherLinks" 
+                                           name="otherLinks" 
+                                           placeholder="Outros links">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Salvar Informações Profissionais
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Section 3: Account Settings -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cog"></i> Configurações da Conta</h2>
+                        <p>Segurança e preferências</p>
+                    </div>
+
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-key"></i>
+                                <div>
+                                    <h3>Alterar Senha</h3>
+                                    <p>Mantenha sua conta segura</p>
+                                </div>
+                            </div>
+                            <button id="changePasswordBtn" type="button" class="btn btn-outline btn-sm">
+                                Alterar
+                            </button>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-bell"></i>
+                                <div>
+                                    <h3>Notificações</h3>
+                                    <p>Gerencie suas preferências de notificações</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline btn-sm" disabled>
+                                Em breve
+                            </button>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h3>Privacidade</h3>
+                                    <p>Controle quem pode ver seu perfil</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline btn-sm" disabled>
+                                Em breve
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="modalOverlay" class="modal-overlay"></div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Alterar Senha</h2>
+                <p>Digite sua senha atual e a nova senha</p>
+                <button id="closeChangePasswordBtn" type="button" class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form class="modal-form" id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Senha Atual <span class="required">*</span></label>
+                    <input type="password" 
+                           id="currentPassword" 
+                           name="currentPassword" 
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">Nova Senha <span class="required">*</span></label>
+                    <input type="password" 
+                           id="newPassword" 
+                           name="newPassword" 
+                           minlength="6"
+                           required>
+                    <small class="form-hint">Mínimo de 6 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirmar Nova Senha <span class="required">*</span></label>
+                    <input type="password" 
+                           id="confirmNewPassword" 
+                           name="confirmNewPassword" 
+                           minlength="6"
+                           required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-key"></i> Alterar Senha
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+</html>
